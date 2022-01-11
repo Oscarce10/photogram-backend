@@ -10,3 +10,16 @@ class CategoriesProcess:
             "status": 200,
             "data": res
         }
+
+    @staticmethod
+    def get_photos(
+            current_page: int,
+            items_per_page: int,
+            order_by: str
+    ):
+        qs = Queryset()
+        return qs.get_all_photos(
+            current_page,
+            items_per_page,
+            order_by
+        )

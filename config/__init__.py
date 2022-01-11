@@ -8,7 +8,7 @@ app = FastAPI(
     title="Photogram Backend",
     description="",
     version="v1",
-    docs_url="/documentation"
+    docs_url="/docs"
 )
 
 origins = ["*"]
