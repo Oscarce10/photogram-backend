@@ -114,6 +114,7 @@ photos = APIRouter()
     },
 )
 async def get_photos_view(
+        category_id: Optional[int] = Query(None),
         current_page: int = 1,
         items_per_page: int = 10,
         order_by: SortSerializer = "desc"
@@ -129,6 +130,7 @@ async def get_photos_view(
 
     try:
         response = CategoriesHandler.get_photos(
+            category_id=category_id,
             current_page=current_page,
             items_per_page=items_per_page,
             order_by=order_by
@@ -147,7 +149,7 @@ async def get_photos_view(
 
 
 @photos.put(
-    "/",
+    "/{category}",
     tags=["Like a photo"],
     response_model=ResponseSerializer,
     responses={

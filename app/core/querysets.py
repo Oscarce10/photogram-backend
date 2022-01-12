@@ -31,16 +31,20 @@ class Queryset:
 
     def get_all_photos(
             self,
+            category_id: int,
             current_page: int,
             items_per_page: int,
             order_by: str,
     ):
         db = self.client.photogram
         collection = db.photos
-        count = collection.count_documents({})
+        qy = {
+                     "categoryId": category_id
+                 } if category_id is not None else {}
+        count = collection.count_documents(qy)
         photos = list(
             collection.find(
-                {},
+                qy,
                 {
                     "_id": 0
                 }

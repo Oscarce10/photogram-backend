@@ -24,12 +24,14 @@ class CategoriesProcess:
 class PhotosProcess:
     @staticmethod
     def get_photos(
+            category_id: int,
             current_page: int,
             items_per_page: int,
             order_by: str
     ):
         qs = Queryset()
         return qs.get_all_photos(
+            category_id,
             current_page,
             items_per_page,
             order_by

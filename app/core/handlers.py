@@ -12,11 +12,13 @@ class CategoriesHandler:
 
     @staticmethod
     def get_photos(
+            category_id: int,
             current_page: int,
             items_per_page: int,
             order_by: str
     ):
         return PhotosProcess().get_photos(
+            category_id=category_id,
             current_page=current_page,
             items_per_page=items_per_page,
             order_by=order_by
