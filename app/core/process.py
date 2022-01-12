@@ -38,6 +38,15 @@ class PhotosProcess:
         )
 
     @staticmethod
+    def get_photo(
+            photo_id: int,
+    ):
+        qs = Queryset()
+        return qs.get_photo(
+            photo_id,
+        )
+
+    @staticmethod
     def like_dislike_photo(photo_id: int, action: str):
         qs = Queryset()
         return qs.like_dislike_photo(photo_id, action)

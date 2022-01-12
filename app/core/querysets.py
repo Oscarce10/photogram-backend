@@ -39,8 +39,8 @@ class Queryset:
         db = self.client.photogram
         collection = db.photos
         qy = {
-                     "categoryId": category_id
-                 } if category_id is not None else {}
+            "categoryId": category_id
+        } if category_id is not None else {}
         count = collection.count_documents(qy)
         photos = list(
             collection.find(
@@ -65,6 +65,25 @@ class Queryset:
                 "total_items": count,
                 "total_pages": math.ceil(count / items_per_page)
             }
+        }
+
+    def get_photo(
+            self,
+            photo_id: int,
+    ):
+        db = self.client.photogram
+        collection = db.photos
+        photo = collection.find_one(
+            {
+                "id": photo_id
+            },
+            {
+                "_id": 0
+            }
+        )
+        return {
+            "status": 200,
+            "data": photo,
         }
 
     def like_dislike_photo(self, photo_id: int, action: str):

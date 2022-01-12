@@ -25,6 +25,14 @@ class CategoriesHandler:
         )
 
     @staticmethod
+    def get_photo(
+            photo_id: int,
+    ):
+        return PhotosProcess().get_photo(
+            photo_id=photo_id
+        )
+
+    @staticmethod
     def like_dislike_photo(photo_id: int, action: str):
         return PhotosProcess().like_dislike_photo(
             photo_id=photo_id,

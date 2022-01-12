@@ -149,7 +149,7 @@ async def get_photos_view(
 
 
 @photos.put(
-    "/{category}",
+    "/",
     tags=["Like a photo"],
     response_model=ResponseSerializer,
     responses={
@@ -176,6 +176,47 @@ async def set_like_dislike_view(
         response = CategoriesHandler.like_dislike_photo(
             photo_id=photo.photo_id,
             action=photo.action
+        )
+        return JSONResponse(
+            content=response,
+            status_code=response["status"]
+        )
+    except Exception as e:
+        return JSONResponse(
+            content={
+                "status": 500,
+                "message": str(e)
+            }, status_code=500
+        )
+
+
+@photos.get(
+    "/{photo_id}/",
+    tags=["Like a photo"],
+    response_model=ResponseSerializer,
+    responses={
+        500: {"content": {
+            "application/json": {
+                "example": "Internal Server Error"
+            }
+        }, }
+    },
+)
+async def set_like_dislike_view(
+        photo_id: int
+):
+    """ **Like a photo**
+
+    Increments the likes of a photo by 1
+
+    **Returns**
+
+    dict: with the warranty response information
+    """
+
+    try:
+        response = CategoriesHandler.get_photo(
+            photo_id=photo_id
         )
         return JSONResponse(
             content=response,
