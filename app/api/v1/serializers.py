@@ -13,3 +13,13 @@ class ResponseSerializer(BaseModel):
 class SortSerializer(str, Enum):
     ASC = 'asc'
     DESC = 'desc'
+
+
+class LikeDislike(str, Enum):
+    LIKE = 'like'
+    DISLIKE = 'dislike'
+
+
+class LikeDislikePhotoSerializer(BaseModel):
+    photo_id: int
+    action: LikeDislike

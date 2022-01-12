@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 from starlette.responses import JSONResponse
 
-from app.api.v1.serializers import ResponseSerializer, SortSerializer
+from app.api.v1.serializers import ResponseSerializer, SortSerializer, \
+    LikeDislikePhotoSerializer
 from app.core.handlers import CategoriesHandler
 
 router = APIRouter()
@@ -20,7 +21,7 @@ router = APIRouter()
     },
 )
 async def get_categories_view():
-    """ **Register Warranty**
+    """ **Get Categories**
 
     Pending
 
@@ -61,7 +62,7 @@ async def get_photos_view(
         items_per_page: int = 10,
         order_by: SortSerializer = "desc"
 ):
-    """ **Register Warranty**
+    """ **Get Photos**
 
     Pending
 
@@ -75,6 +76,48 @@ async def get_photos_view(
             current_page=current_page,
             items_per_page=items_per_page,
             order_by=order_by
+        )
+        return JSONResponse(
+            content=response,
+            status_code=response["status"]
+        )
+    except Exception as e:
+        return JSONResponse(
+            content={
+                "status": 500,
+                "message": str(e)
+            }, status_code=500
+        )
+
+
+@router.post(
+    "/photos",
+    tags=["Like a photo"],
+    response_model=ResponseSerializer,
+    responses={
+        500: {"content": {
+            "application/json": {
+                "example": "Internal Server Error"
+            }
+        }, }
+    },
+)
+async def set_like_dislike_view(
+        photo: LikeDislikePhotoSerializer
+):
+    """ **Like a photo**
+
+    Increments the likes of a photo by 1
+
+    **Returns**
+
+    dict: with the warranty response information
+    """
+
+    try:
+        response = CategoriesHandler.like_dislike_photo(
+            photo_id=photo.photo_id,
+            action=photo.action
         )
         return JSONResponse(
             content=response,

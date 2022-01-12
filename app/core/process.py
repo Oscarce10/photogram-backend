@@ -23,3 +23,8 @@ class CategoriesProcess:
             items_per_page,
             order_by
         )
+
+    @staticmethod
+    def like_dislike_photo(photo_id: int, action: str):
+        qs = Queryset()
+        return qs.like_dislike_photo(photo_id, action)

@@ -46,3 +46,31 @@ class Queryset:
                 "total_pages": math.ceil(count / items_per_page)
             }
         }
+
+    def like_dislike_photo(self, photo_id: int, action: str):
+        db = self.client.photogram
+        collection = db.photos
+        photo = collection.find_one({"id": photo_id})
+        if photo:
+            collection.update_one(
+                {"id": photo_id},
+                {
+                    "$set": {
+                        "likes": photo["likes"] + 1 if action == "like" else
+                        photo["likes"] - 1
+                    }
+                }
+            )
+            return {
+                "status": 200,
+                "data": {
+                    "message": "Photo liked successfully" if action == "like"
+                    else "Photo disliked successfully"
+                }
+            }
+        return {
+            "status": 409,
+            "data": {
+                "message": "Photo not found"
+            }
+        }
