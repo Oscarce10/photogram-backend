@@ -1,6 +1,7 @@
 from fastapi import APIRouter
+
+from app.api.v1.urls import api
 from app.meta import views as meta
-from app.api.v1 import views as api_v1
 
 urls = APIRouter()
 
@@ -10,6 +11,6 @@ urls.include_router(
 )
 
 urls.include_router(
-    api_v1.router,
+    api,
     prefix="/api/v1"
 )

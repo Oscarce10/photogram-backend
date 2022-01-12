@@ -12,6 +12,17 @@ class CategoriesProcess:
         }
 
     @staticmethod
+    def get_category(category_id: int):
+        qs = Queryset()
+        res = qs.get_category(category_id)
+        return {
+            "status": 200,
+            "data": res
+        }
+
+
+class PhotosProcess:
+    @staticmethod
     def get_photos(
             current_page: int,
             items_per_page: int,

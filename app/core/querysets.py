@@ -13,6 +13,22 @@ class Queryset:
         collection = db.categories
         return list(collection.find({}, {"_id": 0}))
 
+    def get_category(self, category_id: int):
+        db = self.client.photogram
+        collection = db.categories
+        category = collection.find_one({"id": category_id})
+        if category:
+            return {
+                "status": 200,
+                "data": category
+            }
+        return {
+            "status": 404,
+            "data": {
+                "message": "Category not found"
+            }
+        }
+
     def get_all_photos(
             self,
             current_page: int,

@@ -1,15 +1,20 @@
-from fastapi import APIRouter
+from typing import Optional
+
+from fastapi import APIRouter, Query
 from starlette.responses import JSONResponse
 
 from app.api.v1.serializers import ResponseSerializer, SortSerializer, \
     LikeDislikePhotoSerializer
 from app.core.handlers import CategoriesHandler
 
-router = APIRouter()
+"""
+-------------------------  Categories -------------------------
+"""
+categories = APIRouter()
 
 
-@router.get(
-    "/categories",
+@categories.get(
+    "/",
     tags=["Get all categories"],
     response_model=ResponseSerializer,
     responses={
@@ -45,8 +50,59 @@ async def get_categories_view():
         )
 
 
-@router.get(
-    "/photos",
+@categories.get(
+    "/{category_id}/",
+    tags=["Get a category by id"],
+    response_model=ResponseSerializer,
+    responses={
+        500: {"content": {
+            "application/json": {
+                "example": "Internal Server Error"
+            }
+        }, }
+    },
+)
+async def get_category_view(
+        category_id: int
+):
+    """ **Get Categories**
+
+    Pending
+
+    **Returns**
+
+    dict: with the warranty response information
+    """
+
+    try:
+        response = CategoriesHandler.get_category(
+            category_id=category_id
+        )
+        return JSONResponse(
+            content=response,
+            status_code=response["status"]
+        )
+    except Exception as e:
+        return JSONResponse(
+            content={
+                "status": 500,
+                "message": str(e)
+            }, status_code=500
+        )
+
+
+"""
+-------------------------  ----------------- -------------------------
+"""
+
+"""
+-------------------------  photos -------------------------
+"""
+photos = APIRouter()
+
+
+@photos.get(
+    "/",
     tags=["Get all photos"],
     response_model=ResponseSerializer,
     responses={
@@ -90,8 +146,8 @@ async def get_photos_view(
         )
 
 
-@router.post(
-    "/photos",
+@photos.put(
+    "/",
     tags=["Like a photo"],
     response_model=ResponseSerializer,
     responses={
