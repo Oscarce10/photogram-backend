@@ -1,6 +1,7 @@
 from typing import Optional
 
 from fastapi import APIRouter, Query
+from sentry_sdk import capture_exception
 from starlette.responses import JSONResponse
 
 from app.api.v1.serializers import ResponseSerializer, SortSerializer, \
@@ -42,10 +43,11 @@ async def get_categories_view():
             status_code=response["status"]
         )
     except Exception as e:
+        capture_exception(e)
         return JSONResponse(
             content={
                 "status": 500,
-                "message": str(e)
+                "message": "internal server error"
             }, status_code=500
         )
 
@@ -83,10 +85,11 @@ async def get_category_view(
             status_code=response["status"]
         )
     except Exception as e:
+        capture_exception(e)
         return JSONResponse(
             content={
                 "status": 500,
-                "message": str(e)
+                "message": "internal server error"
             }, status_code=500
         )
 
@@ -140,10 +143,11 @@ async def get_photos_view(
             status_code=response["status"]
         )
     except Exception as e:
+        capture_exception(e)
         return JSONResponse(
             content={
                 "status": 500,
-                "message": str(e)
+                "message": "internal server error"
             }, status_code=500
         )
 
@@ -182,10 +186,11 @@ async def set_like_dislike_view(
             status_code=response["status"]
         )
     except Exception as e:
+        capture_exception(e)
         return JSONResponse(
             content={
                 "status": 500,
-                "message": str(e)
+                "message": "Internal Server Error"
             }, status_code=500
         )
 
@@ -223,9 +228,10 @@ async def set_like_dislike_view(
             status_code=response["status"]
         )
     except Exception as e:
+        capture_exception(e)
         return JSONResponse(
             content={
                 "status": 500,
-                "message": str(e)
+                "message": "Internal Server Error"
             }, status_code=500
         )
