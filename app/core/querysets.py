@@ -6,7 +6,8 @@ from pymongo import MongoClient
 
 class Queryset:
     def __init__(self):
-        self.client = MongoClient(os.getenv('MONGO_URI'))
+        self.client = MongoClient(os.getenv('MONGO_URI') or
+                                  'mongodb://localhost:27017/photogram')
 
     def get_all_categories(self):
         db = self.client.photogram
@@ -14,7 +15,7 @@ class Queryset:
         return list(collection.find({}, {"_id": 0}))
 
     def get_category(self, category_id: int):
-        db = self.client.photogram
+        db = self.client.photogram  
         collection = db.categories
         category = collection.find_one({"id": category_id})
         if category:

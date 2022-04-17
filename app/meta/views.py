@@ -11,7 +11,7 @@ async def root():
         status_code=200,
         content={
             "status": 200,
-            "message": "API REST is ready",
+            "message": "API RESTTT   is ready",
             "data": {
                 "owner": "Oscar Cely",
                 "source": "https://github.com/Oscarce10/photogram-backend"

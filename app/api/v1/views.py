@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 from fastapi import APIRouter, Query
@@ -7,6 +8,7 @@ from starlette.responses import JSONResponse
 from app.api.v1.serializers import ResponseSerializer, SortSerializer, \
     LikeDislikePhotoSerializer
 from app.core.handlers import CategoriesHandler
+from app.core.utils import send_slack_notification
 
 """
 -------------------------  Categories -------------------------
@@ -144,10 +146,16 @@ async def get_photos_view(
         )
     except Exception as e:
         capture_exception(e)
+        send_slack_notification(
+            username="Photogram API",
+            icon_emoji=":robot_face:",
+            message=str(e),
+        )
         return JSONResponse(
             content={
                 "status": 500,
-                "message": "internal server error"
+                "message": "internal server error, exception caught, "
+                           "sentry: {}".format(os.getenv("SENTRY_DSN"))
             }, status_code=500
         )
 

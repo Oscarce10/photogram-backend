@@ -1,10 +1,13 @@
-FROM python:3.8
-
-COPY [".", "/usr/src/app"]
+FROM python:3.8-slim
 
 WORKDIR /usr/src/app
 
-RUN pip install -r requirements.txt
+ADD ./requirements.txt /usr/src/app
+
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
+
+ADD . /usr/src/app
+
 
 EXPOSE 3000
 

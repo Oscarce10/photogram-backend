@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  app:
+    image: photogram-backend
+    environment:
+      - PYTHONBUFFERED=1
+      - MONGO_URI=
+#      - MONGO_URI=
+      - SENTRY_DSN=https://24f63ba5985f483d80bf6ffe80c7e808@o1191101.ingest.sentry.io/6312344
+      - SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mongo
+    ports:
+      - "27018:27017"
