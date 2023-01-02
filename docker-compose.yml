@@ -1,20 +1,19 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  app:
-    image: photogram-backend
-    environment:
-      - PYTHONBUFFERED=1
-      - MONGO_URI=
-#      - MONGO_URI=
-      - SENTRY_DSN=https://24f63ba5985f483d80bf6ffe80c7e808@o1191101.ingest.sentry.io/6312344
-      - SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
-    depends_on:
-      - db
+  web:
+    build: .
+    command: uvicorn config:app --host 0.0.0.0 --port 3000
+    expose:
+      - 3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fastapi.rule=Host(`localhost:3000`)"
+  traefik:
+    image: traefik:v2.2
     ports:
-      - "3000:3000"
-
-  db:
-    image: mongo
-    ports:
-      - "27018:27017"
+      - 3000:80
+      - 8081:8080
+    volumes:
+      - "./traefik.dev.toml:/etc/traefik/traefik.toml"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
