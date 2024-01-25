@@ -1,5 +1,5 @@
 # serverless.yaml
-org: ${file(./.env.json):ORG, "}
+org: ${file(./.env.json):ORG, "default"}
 service: photogram-api-FastAPI
 package:
     individually: true
@@ -50,8 +50,8 @@ functions:
                 - "!.env*"
         handler: config.handler
         environment:
-            MONGO_URI: ${file(./.env.json):MONGO_URI, "}
-            SENTRY_DSN: ${file(./.env.json):SENTRY_DSN, "}
+            MONGO_URI: ${file(./.env.json):MONGO_URI, "default"}
+            SENTRY_DSN: ${file(./.env.json):SENTRY_DSN, "default"}
         events:
             - http:
                   method: get
