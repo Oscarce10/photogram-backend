@@ -15,7 +15,7 @@ class Queryset:
         return list(collection.find({}, {"_id": 0}))
 
     def get_category(self, category_id: int):
-        db = self.client.photogram  
+        db = self.client.photogram
         collection = db.categories
         category = collection.find_one({"id": category_id})
         if category:

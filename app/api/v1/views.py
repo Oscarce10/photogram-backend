@@ -205,7 +205,7 @@ async def set_like_dislike_view(
 
 @photos.get(
     "/{photo_id}/",
-    tags=["Like a photo"],
+    tags=["Get photo information"],
     response_model=ResponseSerializer,
     responses={
         500: {"content": {
@@ -215,7 +215,7 @@ async def set_like_dislike_view(
         }, }
     },
 )
-async def set_like_dislike_view(
+async def get_photo_view(
         photo_id: int
 ):
     """ **Like a photo**
