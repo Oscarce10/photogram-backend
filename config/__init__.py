@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 import sentry_sdk
+from mangum import Mangum
 
 from config import urls
 
@@ -11,20 +12,26 @@ app = FastAPI(
     title="Photogram Backend",
     description="",
     version="v1",
-    docs_url="/docs"
+    docs_url="/docs",
+    openapi_prefix='/dev/'
 )
+
+
+handler = Mangum(app)
 
 
 sentry_sdk.init(
-    os.environ.get("SENTRY_DSN"),   
-
+    dsn=os.environ.get("SENTRY_DSN"),   
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
     # We recommend adjusting this value in production.
-    traces_sample_rate=1.0
+    profiles_sample_rate=1.0,
 )
 
-origins = ["*"]
+origins = ["https://*.oscar-cely.xyz"]
 
 app.add_middleware(
     CORSMiddleware,
