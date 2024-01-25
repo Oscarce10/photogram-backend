@@ -3,7 +3,6 @@ import os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 import sentry_sdk
-from mangum import Mangum
 
 from config import urls
 
@@ -12,13 +11,8 @@ app = FastAPI(
     title="Photogram Backend",
     description="",
     version="v1",
-    docs_url="/docs",
-    openapi_prefix='/dev/'
+    docs_url="/docs"
 )
-
-
-handler = Mangum(app)
-
 
 sentry_sdk.init(
     dsn=os.environ.get("SENTRY_DSN"),
@@ -31,7 +25,7 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-origins = ["https://*.oscar-cely.xyz"]
+origins = [f"https://*.{os.getenv('DOMAIN')}", "http://localhost)}"]
 
 app.add_middleware(
     CORSMiddleware,

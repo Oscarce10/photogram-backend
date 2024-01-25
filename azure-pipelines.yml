@@ -1,5 +1,5 @@
 trigger:
-  - serverless
+  - docker
 
 resources:
     repositories:
@@ -10,6 +10,6 @@ resources:
 
 
 extends:
-  template: python_serverless.yml@templates
+  template: python_docker.yml@templates
   parameters:
     repository: photogram-backend
