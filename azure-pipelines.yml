@@ -12,4 +12,4 @@ resources:
 extends:
   template: python_serverless.yml@templates
   parameters:
-    repository: fastapi_template
+    repository: photogram-backend
