@@ -1,6 +1,6 @@
 FROM python:3.10-bullseye
 
-#HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "executable" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "executable" ]
 
 WORKDIR /usr/src/app
 
