@@ -10,7 +10,7 @@ provider:
     timeout: 30
     apiGateway:
         apiKeys:
-            - value: ${file(./.env.json):API_KEY}
+            - value: ${file(./.env.json):API_KEY, "default"}
         description: API key for Photogram API
 plugins:
     - serverless-python-requirements
@@ -20,18 +20,18 @@ custom:
    domains:
        # References to 'prod' stage
        prod:
-           domainName: photogram-api.${file(./.env.json):DOMAIN}
-           certificateName: photogram-api.${file(./.env.json):DOMAIN}
+           domainName: photogram-api.${file(./.env.json):DOMAIN, "default"}
+           certificateName: photogram-api.${file(./.env.json):DOMAIN, "default"}
    # Amazon Certificate Manager
    customCertificate:
-       hostedZoneNames: ${file(./.env.json):DOMAIN}. # don't forget the dot on the end - is required by Route53
-       certificateName: photogram-api.${file(./.env.json):DOMAIN}
+       hostedZoneNames: ${file(./.env.json):DOMAIN, "default"}. # don't forget the dot on the end - is required by Route53
+       certificateName: photogram-api.${file(./.env.json):DOMAIN, "default"}
        region: us-east-1
 
    # Route53
    customDomain:
-       domainName: photogram-api.${file(./.env.json):DOMAIN}
-       certificateName: photogram-api.${file(./.env.json):DOMAIN}
+       domainName: photogram-api.${file(./.env.json):DOMAIN, "default"}
+       certificateName: photogram-api.${file(./.env.json):DOMAIN, "default"}
        createRoute53Record: true
        autoDomain: true
 
