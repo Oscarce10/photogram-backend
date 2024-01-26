@@ -1,4 +1,4 @@
-# serverless.yaml
+# If using domain and certificate, run `sls create-cert`, and `sls create_domain` before `sls deploy`
 org: ${file(./.env.json):ORG, "default"}
 service: photogram-api-FastAPI
 package:
@@ -8,34 +8,33 @@ provider:
     runtime: python3.10
     memorySize: 128
     timeout: 30
-    #  apiGateway:
-    #    apiKeys:
-    #      - value: ${file(./.env.json):API_KEY}
-    #        description: API key for Photogram API
-#    iam:
-#        role: arn:aws:iam::145871297803:role/LambdaExecutionRole
+    apiGateway:
+        apiKeys:
+            - value: ${file(./.env.json):API_KEY}
+        description: API key for Photogram API
 plugins:
     - serverless-python-requirements
-#    - serverless-domain-manager
-#    - serverless-certificate-creator
-#custom:
-#    domains:
-#        # References to 'prod' stage
-#        prod:
-#            domainName: photogram-api.${file(./.env.json):DOMAIN}
-#            certificateName: photogram-api.${file(./.env.json):DOMAIN}
-#    # Amazon Certificate Manager
-#    customCertificate:
-#        hostedZoneNames: ${file(./.env.json):DOMAIN}. # don't forget the dot on the end - is required by Route53
-#        certificateName: photogram-api.${file(./.env.json):DOMAIN}
-#        region: us-east-1
-#
-#    # Route53
-#    customDomain:
-#        domainName: photogram-api.${file(./.env.json):DOMAIN}
-#        certificateName: photogram-api.${file(./.env.json):DOMAIN}
-#        createRoute53Record: true
-#        autoDomain: true
+    - serverless-domain-manager
+    - serverless-certificate-creator
+custom:
+   domains:
+       # References to 'prod' stage
+       prod:
+           domainName: photogram-api.${file(./.env.json):DOMAIN}
+           certificateName: photogram-api.${file(./.env.json):DOMAIN}
+   # Amazon Certificate Manager
+   customCertificate:
+       hostedZoneNames: ${file(./.env.json):DOMAIN}. # don't forget the dot on the end - is required by Route53
+       certificateName: photogram-api.${file(./.env.json):DOMAIN}
+       region: us-east-1
+
+   # Route53
+   customDomain:
+       domainName: photogram-api.${file(./.env.json):DOMAIN}
+       certificateName: photogram-api.${file(./.env.json):DOMAIN}
+       createRoute53Record: true
+       autoDomain: true
+
 functions:
     app:
         package:
