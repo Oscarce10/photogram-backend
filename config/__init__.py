@@ -12,8 +12,6 @@ app = FastAPI(
     title="Photogram Backend",
     description="",
     version="v1",
-    docs_url="/docs",
-    openapi_prefix='/dev/'
 )
 
 
@@ -31,7 +29,7 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-origins = ["https://*.oscar-cely.xyz"]
+origins = os.environ.get("ORIGINS", "*").split(",")
 
 app.add_middleware(
     CORSMiddleware,

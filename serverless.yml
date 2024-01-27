@@ -51,6 +51,8 @@ functions:
         environment:
             MONGO_URI: ${file(./.env.json):MONGO_URI, "default"}
             SENTRY_DSN: ${file(./.env.json):SENTRY_DSN, "default"}
+            DOMAIN: ${file(./.env.json):DOMAIN, "default"}
+            ORIGINS: ${file(./.env.json):ORIGINS, "default"}
         events:
             - http:
                   method: get
