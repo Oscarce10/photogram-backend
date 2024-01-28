@@ -1,4 +1,4 @@
-FROM python:3.10-bullseye
+FROM python:3.10.13-bullseye
 
 # Set the working directory globally
 ARG SOURCEDIR="app"

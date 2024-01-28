@@ -24,6 +24,6 @@ uvicorn config:app --host=127.0.0.1 --port=5000 --reload --log-level=info
 ### Docker
     
 ```bash
-$ docker build -t fastapitemplate .
-$ docker run --rm --env-file ./.env -p 5000:5000 fastapitemplate
+$ docker build -t photogram-backend .
+$ docker run --rm --env-file ./.env -p 5000:5000 photogram-backend
 ```

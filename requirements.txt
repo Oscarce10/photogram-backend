@@ -1,5 +1,4 @@
 fastapi
 uvicorn[standard]
 sentry-sdk[fastapi]
-mangum
 pymongo[srv]
