@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 # Add a non-root user for security reasons
 RUN adduser --home /${SOURCEDIR} ${APP_NAME}
-USER photogram
+USER ${APP_NAME}
 
 # Ensure the binaries are accessible and executable
 ENV PATH=/${SOURCEDIR}/.local/bin:$PATH
