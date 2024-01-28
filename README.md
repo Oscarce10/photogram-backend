@@ -17,7 +17,7 @@ $ pip install -r requirements.txt
 ### Pip
 
 ```bash
-uvicorn config:app --host=127.0.0.1 --port=3000 --reload --log-level=info
+uvicorn config:app --host=127.0.0.1 --port=5000 --reload --log-level=info
 ```
 
 
@@ -25,6 +25,5 @@ uvicorn config:app --host=127.0.0.1 --port=3000 --reload --log-level=info
     
 ```bash
 $ docker build -t fastapitemplate .
-$ docker run -p 3000:3000 --network host fastapitemplate
-
+$ docker run --rm --env-file ./.env -p 5000:5000 fastapitemplate
 ```

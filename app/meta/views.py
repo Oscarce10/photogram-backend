@@ -11,10 +11,21 @@ async def root():
         status_code=200,
         content={
             "status": 200,
-            "message": "API RESTTT   is ready",
+            "message": "Photogram API is ready",
             "data": {
                 "owner": "Oscar Cely",
                 "source": "https://github.com/Oscarce10/photogram-backend"
             }
+        }
+    )
+
+
+@router.get("/health", tags=["healthcheck"])
+async def get_health():
+    return JSONResponse(
+        status_code=200,
+        content={
+            "status": 200,
+            "message": "OK"
         }
     )
